@@ -11,11 +11,25 @@ namespace Cat_And_Mouse
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static public bool catWins = false;
+        static public bool mouseWins = false;
+        bool isTimerOn = true;
+        static public float counter = 30000;
+
+        UserSprite mouseSprite;
+        AgentSprite catSprite;
+        GameOverSprite catWin;
+        GameOverSprite mouseWin;
+
+
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 768;
         }
 
         /// <summary>
@@ -27,7 +41,13 @@ namespace Cat_And_Mouse
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            mouseSprite = new UserSprite(this);
+            catSprite = new AgentSprite(this);
+            catWin = new GameOverSprite(this);
+            mouseWin = new GameOverSprite(this);
 
+            mouseSprite.randomizePosition();
+            catSprite.randomizePosition();
             base.Initialize();
         }
 
@@ -41,6 +61,10 @@ namespace Cat_And_Mouse
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            mouseSprite.setTex("mouse");
+            catSprite.setTex("cat");
+            mouseWin.setTex("mousewin");
+            catWin.setTex("catwin");
         }
 
         /// <summary>
@@ -61,8 +85,19 @@ namespace Cat_And_Mouse
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            mouseSprite.update();
+            catSprite.update(gameTime, mouseSprite.x + 16, mouseSprite.y + 16);
 
             // TODO: Add your update logic here
+            if (isTimerOn)
+            {
+                counter -= gameTime.ElapsedGameTime.Milliseconds;
+                if (counter <= 0)
+                {
+                    mouseWins = true;
+                    catWins = false;
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -76,6 +111,21 @@ namespace Cat_And_Mouse
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            mouseSprite.draw(spriteBatch, graphics);
+            catSprite.draw(spriteBatch, graphics);
+
+            
+          if (mouseWins)
+            {
+                mouseWin.draw(spriteBatch, graphics);
+            }
+          else if (catWins)
+            {
+                catWin.draw(spriteBatch, graphics);
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
