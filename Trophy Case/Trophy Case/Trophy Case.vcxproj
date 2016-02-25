@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1F994805-A9BD-4BF9-A591-671B20674FFF}</ProjectGuid>
-    <RootNamespace>OperatorOverloadLab</RootNamespace>
+    <ProjectGuid>{CD251AB4-FC06-4057-A997-DFE0A6B7581B}</ProjectGuid>
+    <RootNamespace>TrophyCase</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -110,14 +110,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Desktop\LAB- Operator Overloading\main.cpp" />
-    <ClCompile Include="..\..\..\..\Desktop\LAB- Operator Overloading\Vector2.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Trophy.cpp" />
+    <ClCompile Include="TrophyCase.cpp" />
+    <ClCompile Include="TrophyColor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Desktop\LAB- Operator Overloading\Vector2.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\..\Desktop\LAB- Operator Overloading\Vector2.txt" />
+    <ClInclude Include="Trophy.h" />
+    <ClInclude Include="TrophyCase.h" />
+    <ClInclude Include="TrophyColor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
