@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace Cat_And_Mouse
 {
@@ -48,8 +49,10 @@ namespace Cat_And_Mouse
 
         public void randomizePosition()
         {
-            Random rand1 = new Random();
-            Random rand2 = new Random();
+            Random rand1 = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            Thread.Sleep(20);
+            Random rand2 = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            Thread.Sleep(20);
             int newX = rand1.Next(1024);
             int newY = rand2.Next(768);
             x = newX;

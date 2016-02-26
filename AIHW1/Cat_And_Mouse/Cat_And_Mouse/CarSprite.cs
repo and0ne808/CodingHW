@@ -8,30 +8,30 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Cat_And_Mouse
 {
-    class AgentSprite : Sprite
+    class CarSprite : Sprite
     {
         Game currentGame;
         float slowDistance;
         float slowDistance2;
         float max_vel_y;
 
-        public AgentSprite(Game game)
-            : base (game)
+        public CarSprite(Game game)
+            : base(game)
         {
             currentGame = game;
-            accel_rate = 0.11f;
-            slowDistance = 50;
-            slowDistance2 = 200;
-            friction = 0.08f;
+            accel_rate = 0.12f;
+            slowDistance = 25;
+            slowDistance2 = 100;
+            friction = 0.04f;
         }
         public void update(GameTime gameTime, float targetX, float targetY)
         {
             Seek(targetX, targetY);
             Move();
             RotateTowardVelocity(targetX, targetY);
-            if(MathHelper.Distance(x, targetX) < 20 && MathHelper.Distance(y, targetY) < 20)
+            if (MathHelper.Distance(x, targetX) < 20 && MathHelper.Distance(y, targetY) < 20)
             {
-               Game1.catWins = true;
+                Game1.catWins = true;
             }
         }
         public void Seek(float targetX, float targetY)
@@ -48,19 +48,19 @@ namespace Cat_And_Mouse
             {
                 max_vel = 10;
             }
-                if (targetX < x && vel_x > -max_vel)
-                {
-                    //accelerate left
-                    vel_x -= accel_rate;
-                }
-                if (targetX > x && vel_x < max_vel)
-                {
-                    //accelerate right
-                    vel_x += accel_rate;
-                }
-            
+            if (targetX < x && vel_x > -max_vel)
+            {
+                //accelerate left
+                vel_x -= accel_rate;
+            }
+            if (targetX > x && vel_x < max_vel)
+            {
+                //accelerate right
+                vel_x += accel_rate;
+            }
+
             //calculate friction
-            if(vel_x > friction)
+            if (vel_x > friction)
             {
                 vel_x -= friction;
             }
@@ -113,7 +113,7 @@ namespace Cat_And_Mouse
         }
         public void RotateTowardVelocity(float targetX, float targetY)
         {
-                rot = -(float)Math.Atan2(vel_x, vel_y);
+            rot = -(float)Math.Atan2(vel_x, vel_y);
         }
         public void Move()
         {

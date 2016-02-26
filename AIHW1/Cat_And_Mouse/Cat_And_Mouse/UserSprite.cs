@@ -58,21 +58,30 @@ namespace Cat_And_Mouse
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && readytojump)
             {
-                Random rand = new Random();
-                int newX = rand.Next(1024);
-                int newY = rand.Next(768);
-                x = newX;
-                y = newY;
-                readytojump = false;
+
+
                 if(Game1.catWins)
                 {
                     Game1.catWins = false;
                     Game1.counter = 30000;
+                    JumpBar.currentPercentage = 100;
                 }
                 if(Game1.mouseWins)
                 {
                     Game1.mouseWins = false;
                     Game1.counter = 30000;
+                    JumpBar.currentPercentage = 100;
+                }
+
+                if (JumpBar.currentPercentage == 100)
+                {
+                    Random rand = new Random();
+                    int newX = rand.Next(1024);
+                    int newY = rand.Next(768);
+                    x = newX;
+                    y = newY;
+                    readytojump = false;
+                    Game1.jumpCounter = 5000;
                 }
 
             }
