@@ -59,7 +59,7 @@ namespace Cat_And_Mouse
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && readytojump)
             {
 
-
+                /*
                 if(Game1.catWins)
                 {
                     Game1.catWins = false;
@@ -72,6 +72,7 @@ namespace Cat_And_Mouse
                     Game1.counter = 30000;
                     JumpBar.currentPercentage = 100;
                 }
+                */
 
                 if (JumpBar.currentPercentage == 100)
                 {
@@ -81,7 +82,7 @@ namespace Cat_And_Mouse
                     x = newX;
                     y = newY;
                     readytojump = false;
-                    Game1.jumpCounter = 5000;
+                    //Game1.jumpCounter = 5000;
                 }
 
             }

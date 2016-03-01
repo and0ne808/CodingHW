@@ -43,7 +43,9 @@
     <Compile Include="AgentSprite.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="CarSprite.cs" />
+    <Compile Include="GridCell.cs" />
     <Compile Include="JumpBar.cs" />
+    <Compile Include="Primitives2D.cs" />
     <Compile Include="TankSprite.cs" />
     <Compile Include="GameOverSprite.cs" />
     <Compile Include="Sprite.cs" />

@@ -11,24 +11,10 @@ namespace Cat_And_Mouse
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        static public bool catWins = false;
-        static public bool mouseWins = false;
-        bool isTimerOn = true;
-        static public float counter = 30000;
-        static public float jumpCounter = 5000;
-
-        UserSprite mouseSprite;
-        AgentSprite catSprite;
-        TankSprite tankSprite;
-        CarSprite carSprite;
-        GameOverSprite catWin;
-        GameOverSprite mouseWin;
         SpriteFont myFont;
-        JumpBar jumpBar;
-        
+        GridCell[,] grid;
 
-
-
+        const int gridSize = 32;
 
         public Game1()
         {
@@ -47,19 +33,20 @@ namespace Cat_And_Mouse
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            mouseSprite = new UserSprite(this);
-            catSprite = new AgentSprite(this);
-            carSprite = new CarSprite(this);
-            tankSprite = new TankSprite(this);
-            catWin = new GameOverSprite(this);
-            mouseWin = new GameOverSprite(this);
-            jumpBar = new JumpBar(this, mouseSprite);
-
-            mouseSprite.randomizePosition();
-            catSprite.randomizePosition();
-            carSprite.randomizePosition();
-            tankSprite.randomizePosition();
             base.Initialize();
+            
+            grid = new GridCell[graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize];
+            
+            for (int i = 0; i < graphics.PreferredBackBufferWidth / gridSize; i++)
+            {
+                for (int j = 0; j < graphics.PreferredBackBufferHeight / gridSize; j++)
+                {
+                    grid[i, j] = new GridCell(this);
+                    grid[i, j].setLocation(i * gridSize, j * gridSize);
+                    grid[i, j].setSize(gridSize, gridSize);
+                }
+            }
+            
         }
 
         /// <summary>
@@ -72,13 +59,6 @@ namespace Cat_And_Mouse
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            mouseSprite.setTex("mouse");
-            catSprite.setTex("cat");
-            carSprite.setTex("car");
-            tankSprite.setTex("tank");
-            mouseWin.setTex("mousewin");
-            catWin.setTex("catwin");
-            jumpBar.setTex("bar");
 
             myFont = Content.Load<SpriteFont>("andrewFont");
         }
@@ -101,33 +81,8 @@ namespace Cat_And_Mouse
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            mouseSprite.update();
-            catSprite.update(gameTime, mouseSprite.x + 16, mouseSprite.y + 16);
-            carSprite.update(gameTime, mouseSprite.x + 16, mouseSprite.y + 16);
-            tankSprite.update(gameTime, mouseSprite.x + 16, mouseSprite.y + 16);
-            jumpBar.update(gameTime);
 
             // TODO: Add your update logic here
-            if (isTimerOn)
-            {
-                counter -= gameTime.ElapsedGameTime.Milliseconds;
-                if (counter <= 0)
-                {
-                    mouseWins = true;
-                    catWins = false;
-                }
-            }
-
-            if(jumpCounter > 0)
-            {
-                jumpCounter -= gameTime.ElapsedGameTime.Milliseconds;
-                JumpBar.currentPercentage = (100 - (jumpCounter/5000*100));
-            }
-            else
-            {
-                jumpCounter = 0;
-                JumpBar.currentPercentage = 100;
-            }
 
             base.Update(gameTime);
         }
@@ -142,24 +97,18 @@ namespace Cat_And_Mouse
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            //Primitives2D.DrawRectangle(spriteBatch, new Rectangle(10, 10, 40, 40), Color.Yellow);
 
-            mouseSprite.draw(spriteBatch, graphics);
-            catSprite.draw(spriteBatch, graphics);
-            carSprite.draw(spriteBatch, graphics);
-            tankSprite.draw(spriteBatch, graphics);
+            for (int i = 0; i < graphics.PreferredBackBufferWidth / gridSize; i++)
+            {
+                for (int j = 0; j < graphics.PreferredBackBufferHeight / gridSize; j++)
+                {
+                    grid[i, j].draw(spriteBatch, graphics);
+                }
+            }
 
-            spriteBatch.DrawString(myFont, (counter/1000).ToString(), new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
-
-            jumpBar.draw(spriteBatch, graphics);
+                    spriteBatch.DrawString(myFont, "Breadth-First Search", new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
             
-          if (mouseWins)
-            {
-                mouseWin.draw(spriteBatch, graphics);
-            }
-          else if (catWins)
-            {
-                catWin.draw(spriteBatch, graphics);
-            }
             spriteBatch.End();
 
             base.Draw(gameTime);

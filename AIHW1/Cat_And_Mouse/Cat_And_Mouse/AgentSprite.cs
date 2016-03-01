@@ -31,7 +31,7 @@ namespace Cat_And_Mouse
             RotateTowardVelocity(targetX, targetY);
             if(MathHelper.Distance(x, targetX) < 20 && MathHelper.Distance(y, targetY) < 20)
             {
-               Game1.catWins = true;
+               //Game1.catWins = true;
             }
         }
         public void Seek(float targetX, float targetY)
