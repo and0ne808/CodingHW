@@ -12,10 +12,14 @@ namespace Cat_And_Mouse
     {
         //protected Node[] adjacent; //adjacency list
 
-        public int iValue;
-        public int jValue;
+        public int iValue; //X node coordinate
+        public int jValue; //Y node coordinate
         public Edge[] edges;
         public int m_numOfEdges; // number of edges originating at this node
+        public bool visited;
+        public int distance;
+        public Stack<Edge> edgeStack;
+        public Node backPtr;
 
         public Node(Game game)
             : base(game)
@@ -29,6 +33,7 @@ namespace Cat_And_Mouse
             jValue = 0;
             edges = new Edge[4];
             m_numOfEdges = 0;
+            visited = false;
         }
         public Node(Game game, int rowNumber, int columnNumber)
     : base(game)
@@ -42,6 +47,7 @@ namespace Cat_And_Mouse
             jValue = columnNumber;
             edges = new Edge[4];
             m_numOfEdges = 0;
+            visited = false;
         }
 
         public void setIJvalue(int newI, int newJ)
@@ -55,10 +61,41 @@ namespace Cat_And_Mouse
             m_numOfEdges = 0;
             if(graph.nodes[iValue, jValue - 1] != null) //Get Adjacent Node to North
             {
-                edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue, jValue - 1], 1);
+                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue, jValue - 1], 1);
+                edgeStack.Push(new Edge(this, graph.nodes[iValue, jValue - 1], 1));
+                //m_numOfEdges++;
+            }
+            if (graph.nodes[iValue, jValue + 1] != null) //Get Adjacent Node to South
+            {
+                // edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue, jValue + 1], 1);
+                edgeStack.Push(new Edge(this, graph.nodes[iValue, jValue + 1], 1));
+                //m_numOfEdges++;
+            }
+            if (graph.nodes[iValue -1, jValue] != null) //Get Adjacent Node to West
+            {
+                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue - 1, jValue], 1);
+                edgeStack.Push(new Edge(this, graph.nodes[iValue - 1, jValue], 1));
+                //m_numOfEdges++;
+            }
+            if (graph.nodes[iValue + 1, jValue] != null) //Get Adjacent Node to East
+            {
+                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue + 1, jValue], 1);
+                edgeStack.Push(new Edge(this, graph.nodes[iValue + 1, jValue], 1));
+                //m_numOfEdges++;
             }
         }
 
-         
+        public void Print()
+        {
+            Console.Write("[");
+            Console.Write(iValue);
+            Console.Write(", ");
+            Console.Write(jValue);
+            Console.Write("]");
+            Console.WriteLine();
+
+        }
+
+
     }
 }
