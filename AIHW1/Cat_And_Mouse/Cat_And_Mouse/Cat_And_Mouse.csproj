@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AgentSprite.cs" />
+    <Compile Include="BackPointer.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="CarSprite.cs" />
     <Compile Include="Edge.cs" />

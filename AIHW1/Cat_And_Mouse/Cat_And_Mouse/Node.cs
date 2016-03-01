@@ -19,7 +19,11 @@ namespace Cat_And_Mouse
         public bool visited;
         public int distance;
         public Stack<Edge> edgeStack;
-        public Edge backPtr;
+        public Stack<Node> neighborStack;
+        //public Edge backPtr;
+        Game thisGame;
+        //public BackPointer backPtr;
+        public Node backPtr;
 
         public Node(Game game)
             : base(game)
@@ -35,7 +39,9 @@ namespace Cat_And_Mouse
             m_numOfEdges = 0;
             visited = false;
             edgeStack = new Stack<Edge>();
-            backPtr = new Edge();
+            //backPtr = new BackPointer();
+            thisGame = game;
+            neighborStack = new Stack<Node>();
 
         }
         public Node(Game game, int rowNumber, int columnNumber)
@@ -52,7 +58,10 @@ namespace Cat_And_Mouse
             m_numOfEdges = 0;
             visited = false;
             edgeStack = new Stack<Edge>();
-            backPtr = new Edge();
+            //backPtr = new BackPointer();
+            thisGame = game;
+            neighborStack = new Stack<Node>();
+
         }
 
         public void setIJvalue(int newI, int newJ)
@@ -63,30 +72,25 @@ namespace Cat_And_Mouse
 
         public void getEdges(Graph graph)
         {
-            m_numOfEdges = 0;
-            if(graph.nodes[iValue, jValue - 1] != null) //Get Adjacent Node to North
+            if(graph.nodes[iValue, jValue].jValue - 1 >= 0) //Get Adjacent Node to North
             {
-                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue, jValue - 1], 1);
-                edgeStack.Push(new Edge(this, graph.nodes[iValue, jValue - 1], 1));
-                //m_numOfEdges++;
+                neighborStack.Push(graph.nodes[iValue, jValue - 1]);
+                //graph.nodes[iValue, jValue - 1].setColor(Color.Pink); //color the neighbor pink
             }
-            if (graph.nodes[iValue, jValue + 1] != null) //Get Adjacent Node to South
+            if (graph.nodes[iValue, jValue].jValue + 1 < graph.columns) //Get Adjacent Node to South
             {
-                // edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue, jValue + 1], 1);
-                edgeStack.Push(new Edge(this, graph.nodes[iValue, jValue + 1], 1));
-                //m_numOfEdges++;
+                neighborStack.Push(graph.nodes[iValue, jValue +1]);
+                //graph.nodes[iValue, jValue + 1].setColor(Color.Pink); //color the neighbor pink
             }
-            if (graph.nodes[iValue -1, jValue] != null) //Get Adjacent Node to West
+            if (graph.nodes[iValue, jValue].iValue - 1 >= 0) //Get Adjacent Node to West
             {
-                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue - 1, jValue], 1);
-                edgeStack.Push(new Edge(this, graph.nodes[iValue - 1, jValue], 1));
-                //m_numOfEdges++;
+                neighborStack.Push(graph.nodes[iValue - 1, jValue]);
+                //graph.nodes[iValue - 1, jValue].setColor(Color.Pink); //color the neighbor pink
             }
-            if (graph.nodes[iValue + 1, jValue] != null) //Get Adjacent Node to East
+            if (graph.nodes[iValue, jValue].iValue + 1 < graph.rows) //Get Adjacent Node to East
             {
-                //edges[m_numOfEdges] = new Edge(this, graph.nodes[iValue + 1, jValue], 1);
-                edgeStack.Push(new Edge(this, graph.nodes[iValue + 1, jValue], 1));
-                //m_numOfEdges++;
+                neighborStack.Push(graph.nodes[iValue + 1, jValue]);
+                //graph.nodes[iValue + 1, jValue].setColor(Color.Pink); //color the neighbor pink
             }
         }
 
@@ -98,7 +102,12 @@ namespace Cat_And_Mouse
             Console.Write(jValue);
             Console.Write("]");
             Console.WriteLine();
+        }
 
+        public void printNeighborStack()
+        {
+            Console.Write("Number of Neighbors: ");
+            Console.WriteLine(neighborStack.Count);
         }
 
 

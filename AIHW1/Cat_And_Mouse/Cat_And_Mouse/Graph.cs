@@ -32,6 +32,7 @@ namespace Cat_And_Mouse
             nodes = new Node[rows, columns];
             nodeQueue = new Queue<Node>();
 
+            Console.WriteLine(rows + " " + columns);
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -58,6 +59,9 @@ namespace Cat_And_Mouse
 
         public void breadthFirstSearch(Node start, Node target)
         {
+            start.setColor(Color.Red);
+            target.setColor(Color.Green);
+
             //Enqueue the "start" node
             nodeQueue.Enqueue(start);
 
@@ -66,7 +70,15 @@ namespace Cat_And_Mouse
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    nodes[i, j].distance = Int32.MaxValue;
+                    if (nodes[i, j] == start)
+                    {
+                        Console.WriteLine("You found the start node and set it's distance to zero");
+                        nodes[i, j].distance = 0;
+                    }
+                    else
+                    {
+                        nodes[i, j].distance = Int32.MaxValue;
+                    }
                 }
             }
 
@@ -76,19 +88,24 @@ namespace Cat_And_Mouse
                 //Dequeue the first node in the Queue as the current node
                 currentNode = nodeQueue.Dequeue();
                 currentNode.visited = true;
+                currentNode.setColor(Color.Orange);
 
                 //if the current node is the goal node
                 if (currentNode == target)
                 {
                     //Success!  We have found the shortest path!  Exit
+                    Console.WriteLine("We have found the target node!");
+                    currentNode.Print();
                 }
                 else
                 {
+                    currentNode.getEdges(this);
+                    //Console.WriteLine(currentNode.neighborStack.Count);
                     //for each of the current node's neighbors
-                    for(int i = 0; i < currentNode.edgeStack.Count; i++)
+                    for(int i = 0; i < currentNode.neighborStack.Count; i++)
                     {
-                        distanceToNeighbor = currentNode.edgeStack.Peek().m_cost;
-                        currentNeighbor = (currentNode.edgeStack.Pop()).m_endNode;
+                        distanceToNeighbor = 1;
+                        currentNeighbor = currentNode.neighborStack.Pop();
 
                         //if the neighbor has been visited (i.e. placed in the Queue) ignore it (we've already seen the shortest path to this neighbor)
                         if(currentNeighbor.visited == false)
@@ -98,9 +115,10 @@ namespace Cat_And_Mouse
 
                             //mark this neighbor as "visited"
                             currentNeighbor.visited = true;
+                            currentNeighbor.setColor(Color.White); //Set visited neighbors to white
 
                             //set its back-pointer to the current node
-                            currentNeighbor.backPtr.m_startNode = currentNode;
+                            currentNeighbor.backPtr = currentNode;
 
                             //add this neighbor to the Queue
                             nodeQueue.Enqueue(currentNeighbor);
@@ -113,11 +131,89 @@ namespace Cat_And_Mouse
             //Print Result
             while (currentNode != null)
             {
-                currentNode.backPtr.m_startNode.Print();
+                //currentNode.backPtr.item.Print();
+                if(currentNode.backPtr == null)
+                {
+                    Console.WriteLine("Back Pointer is null");
+                }
                 currentNode.Print();
-                currentNode = currentNode.backPtr.m_startNode;
+                currentNode.setColor(Color.Yellow);
+                currentNode = currentNode.backPtr;
+            }
+            start.setColor(Color.Red);
+            target.setColor(Color.Green);
+
+        }
+        public void AndrewBreadthFirst(Node start, Node target)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    nodes[i, j].distance = Int32.MaxValue;
+                    nodes[i, j].backPtr = null;
+                }
             }
 
+            Queue<Node> myQueue = new Queue<Node>();
+
+            start.distance = 0;
+
+            //Node startNode = new Node(game, start.iValue + 1, start.jValue + 1);
+
+            myQueue.Enqueue(start);
+
+            while (myQueue.Count != 0)
+            {
+                currentNode = myQueue.Dequeue();
+
+                if(currentNode.iValue == target.iValue && currentNode.jValue == target.jValue)
+                {
+                    break;
+                }
+
+                currentNode.getEdges(this);
+                while(currentNode.neighborStack.Count != 0)
+                {
+                    currentNeighbor = currentNode.neighborStack.Pop();
+                    if (currentNeighbor.distance == Int32.MaxValue)
+                    {
+                        currentNeighbor.distance = currentNode.distance + 1;
+                        currentNeighbor.backPtr = currentNode;
+                        myQueue.Enqueue(currentNeighbor);
+                    }
+                }
+            }
+
+            
+            while (currentNode != start)
+            {
+                currentNode.setColor(Color.Pink);
+                currentNode = currentNode.backPtr;
+            }
+            start.setColor(Color.Red);
+            target.setColor(Color.Green);
+            
+
+            /*
+            for(int i = 0; i < 3; i++)
+            {
+                currentNode.setColor(Color.Pink);
+                currentNode = currentNode.backPtr;
+            }
+            */
+
+
+        }
+        public void printAllNodes()
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    nodes[i, j].Print();
+                }
+            }
         }
     }
 }

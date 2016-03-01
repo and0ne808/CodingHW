@@ -11,7 +11,7 @@ namespace Cat_And_Mouse
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont myFont;
+        //SpriteFont myFont;
         //GridCell[,] grid;
         Graph myGraph;
         bool searched = false;
@@ -56,7 +56,7 @@ namespace Cat_And_Mouse
 
             // TODO: use this.Content to load your game content here
 
-            myFont = Content.Load<SpriteFont>("andrewFont");
+            //myFont = Content.Load<SpriteFont>("andrewFont");
         }
 
         /// <summary>
@@ -82,7 +82,9 @@ namespace Cat_And_Mouse
 
             while(searched == false)
             {
-                myGraph.breadthFirstSearch(myGraph.nodes[1, 1], myGraph.nodes[5, 5]);
+                myGraph.AndrewBreadthFirst(myGraph.nodes[1, 1], myGraph.nodes[5, 5]);
+
+                // myGraph.printAllNodes();
                 searched = true;
             }
 
@@ -103,7 +105,7 @@ namespace Cat_And_Mouse
 
             myGraph.draw(spriteBatch, graphics);
 
-                    spriteBatch.DrawString(myFont, "Breadth-First Search", new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
+            //spriteBatch.DrawString(myFont, "Breadth-First Search", new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
             
             spriteBatch.End();
 
