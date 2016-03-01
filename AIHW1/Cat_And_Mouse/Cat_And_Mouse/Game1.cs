@@ -14,6 +14,7 @@ namespace Cat_And_Mouse
         SpriteFont myFont;
         //GridCell[,] grid;
         Graph myGraph;
+        bool searched = false;
 
         const int gridSize = 32;
 
@@ -38,6 +39,8 @@ namespace Cat_And_Mouse
 
             myGraph = new Graph();
             myGraph.initialize(graphics, gridSize, this);
+            //myGraph.breadthFirstSearch(myGraph.nodes[1, 1], myGraph.nodes[3, 3]);
+            //myGraph.nodes[1, 1].Print();
 
             
         }
@@ -77,7 +80,13 @@ namespace Cat_And_Mouse
 
             // TODO: Add your update logic here
 
-            base.Update(gameTime);
+            while(searched == false)
+            {
+                myGraph.breadthFirstSearch(myGraph.nodes[1, 1], myGraph.nodes[5, 5]);
+                searched = true;
+            }
+
+                base.Update(gameTime);
         }
 
         /// <summary>

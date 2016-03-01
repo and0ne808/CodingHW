@@ -10,8 +10,9 @@ namespace Cat_And_Mouse
 {
     class Edge
     {
-        public Edge(Node startNode = null, Node endNode = null, int cost = 1)
+        public Edge(Node startNode = null, Node endNode = null, int cost = 1, Game game)
         {
+            m_startNode = new Node()
             m_startNode = startNode;
             m_endNode = endNode;
             m_cost = cost;

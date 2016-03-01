@@ -19,7 +19,7 @@ namespace Cat_And_Mouse
         public bool visited;
         public int distance;
         public Stack<Edge> edgeStack;
-        public Node backPtr;
+        public Edge backPtr;
 
         public Node(Game game)
             : base(game)
@@ -34,6 +34,9 @@ namespace Cat_And_Mouse
             edges = new Edge[4];
             m_numOfEdges = 0;
             visited = false;
+            edgeStack = new Stack<Edge>();
+            backPtr = new Edge();
+
         }
         public Node(Game game, int rowNumber, int columnNumber)
     : base(game)
@@ -48,6 +51,8 @@ namespace Cat_And_Mouse
             edges = new Edge[4];
             m_numOfEdges = 0;
             visited = false;
+            edgeStack = new Stack<Edge>();
+            backPtr = new Edge();
         }
 
         public void setIJvalue(int newI, int newJ)

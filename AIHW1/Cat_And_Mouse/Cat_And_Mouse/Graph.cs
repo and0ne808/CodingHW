@@ -10,7 +10,7 @@ namespace Cat_And_Mouse
 {
     class Graph
     {
-        public Node[,] nodes;
+        public Node[,] nodes; // all nodes in the world
         protected int numOfNodes; //number of nodes in the graph
         public GraphicsDeviceManager graphics;
         public int cellSize;
@@ -30,6 +30,7 @@ namespace Cat_And_Mouse
             rows = graphics.PreferredBackBufferWidth / cellSize;
             columns = graphics.PreferredBackBufferHeight / cellSize;
             nodes = new Node[rows, columns];
+            nodeQueue = new Queue<Node>();
 
             for (int i = 0; i < rows; i++)
             {
@@ -99,7 +100,7 @@ namespace Cat_And_Mouse
                             currentNeighbor.visited = true;
 
                             //set its back-pointer to the current node
-                            currentNeighbor.backPtr = currentNode;
+                            currentNeighbor.backPtr.m_startNode = currentNode;
 
                             //add this neighbor to the Queue
                             nodeQueue.Enqueue(currentNeighbor);
@@ -108,6 +109,15 @@ namespace Cat_And_Mouse
                 }
 
             }
+
+            //Print Result
+            while (currentNode != null)
+            {
+                currentNode.backPtr.m_startNode.Print();
+                currentNode.Print();
+                currentNode = currentNode.backPtr.m_startNode;
+            }
+
         }
     }
 }
