@@ -16,6 +16,7 @@ namespace Cat_And_Mouse
         public int y;
         public int width;
         public int height;
+        public Color color;
 
 
         public GridCell(Game game)
@@ -25,6 +26,7 @@ namespace Cat_And_Mouse
             y = 0;
             width = 0;
             height = 0;
+            color = Color.Gray;
         }
 
         public void setLocation(int newX, int newY)
@@ -37,11 +39,15 @@ namespace Cat_And_Mouse
             width = newWidth;
             height = newHeight;
         }
+        public void setColor(Color newColor)
+        {
+            color = newColor;
+        }
 
 
         public void draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
-            Primitives2D.FillRectangle(spriteBatch, new Rectangle(x, y, width, height), Color.Gray);
+            Primitives2D.FillRectangle(spriteBatch, new Rectangle(x, y, width, height), color);
             Primitives2D.DrawRectangle(spriteBatch, new Rectangle(x, y, width, height), Color.Yellow);
         }
     }

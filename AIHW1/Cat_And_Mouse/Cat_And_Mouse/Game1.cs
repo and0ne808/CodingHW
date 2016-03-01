@@ -12,7 +12,8 @@ namespace Cat_And_Mouse
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont myFont;
-        GridCell[,] grid;
+        //GridCell[,] grid;
+        Graph myGraph;
 
         const int gridSize = 32;
 
@@ -34,18 +35,10 @@ namespace Cat_And_Mouse
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            
-            grid = new GridCell[graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize];
-            
-            for (int i = 0; i < graphics.PreferredBackBufferWidth / gridSize; i++)
-            {
-                for (int j = 0; j < graphics.PreferredBackBufferHeight / gridSize; j++)
-                {
-                    grid[i, j] = new GridCell(this);
-                    grid[i, j].setLocation(i * gridSize, j * gridSize);
-                    grid[i, j].setSize(gridSize, gridSize);
-                }
-            }
+
+            myGraph = new Graph();
+            myGraph.initialize(graphics, gridSize, this);
+
             
         }
 
@@ -99,13 +92,7 @@ namespace Cat_And_Mouse
             spriteBatch.Begin();
             //Primitives2D.DrawRectangle(spriteBatch, new Rectangle(10, 10, 40, 40), Color.Yellow);
 
-            for (int i = 0; i < graphics.PreferredBackBufferWidth / gridSize; i++)
-            {
-                for (int j = 0; j < graphics.PreferredBackBufferHeight / gridSize; j++)
-                {
-                    grid[i, j].draw(spriteBatch, graphics);
-                }
-            }
+            myGraph.draw(spriteBatch, graphics);
 
                     spriteBatch.DrawString(myFont, "Breadth-First Search", new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
             
