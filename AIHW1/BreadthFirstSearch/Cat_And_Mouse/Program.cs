@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cat_And_Mouse
+namespace AI_HW
 {
 #if WINDOWS || LINUX
     /// <summary>

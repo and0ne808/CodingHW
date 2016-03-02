@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Cat_And_Mouse
+namespace AI_HW
 {
     /// <summary>
+    /// Imported class for drawing
     /// </summary>
     public static class Primitives2D
     {

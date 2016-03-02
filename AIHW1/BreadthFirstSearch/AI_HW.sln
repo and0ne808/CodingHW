@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat_And_Mouse", "Cat_And_Mouse\Cat_And_Mouse.csproj", "{52C412EE-1262-471A-8B08-B28B60BC1B18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI_HW", "Cat_And_Mouse\AI_HW.csproj", "{52C412EE-1262-471A-8B08-B28B60BC1B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,11 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 
-namespace Cat_And_Mouse
+namespace AI_HW
 {
     class GridCell : DrawableGameComponent
     {
-        public int cellSize;
         public int x;
         public int y;
         public int width;
@@ -26,7 +25,7 @@ namespace Cat_And_Mouse
             y = 0;
             width = 0;
             height = 0;
-            color = Color.Gray;
+            color = Color.CornflowerBlue;
         }
 
         public void setLocation(int newX, int newY)
@@ -48,7 +47,7 @@ namespace Cat_And_Mouse
         public void draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
             Primitives2D.FillRectangle(spriteBatch, new Rectangle(x, y, width, height), color);
-            Primitives2D.DrawRectangle(spriteBatch, new Rectangle(x, y, width, height), Color.Yellow);
+            Primitives2D.DrawRectangle(spriteBatch, new Rectangle(x, y, width, height), Color.Black);
         }
     }
 }

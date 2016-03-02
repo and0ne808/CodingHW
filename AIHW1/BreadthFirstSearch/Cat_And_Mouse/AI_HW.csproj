@@ -8,8 +8,8 @@
     <ProjectGuid>{52C412EE-1262-471A-8B08-B28B60BC1B18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cat_And_Mouse</RootNamespace>
-    <AssemblyName>Cat_And_Mouse</AssemblyName>
+    <RootNamespace>AI_HW</RootNamespace>
+    <AssemblyName>AI_HW</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <MonoGameContentBuilderExe>
@@ -40,23 +40,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AgentSprite.cs" />
-    <Compile Include="BackPointer.cs" />
-    <Compile Include="Bar.cs" />
-    <Compile Include="CarSprite.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GridCell.cs" />
-    <Compile Include="JumpBar.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Primitives2D.cs" />
-    <Compile Include="TankSprite.cs" />
-    <Compile Include="GameOverSprite.cs" />
-    <Compile Include="Sprite.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.4.0.459, Culture=neutral, processorArchitecture=MSIL">

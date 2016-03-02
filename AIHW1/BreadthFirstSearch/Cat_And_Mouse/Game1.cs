@@ -1,22 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Threading;
 
-namespace Cat_And_Mouse
+namespace AI_HW
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// Andrew Day's Breadth First Search
     /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //SpriteFont myFont;
-        //GridCell[,] grid;
         Graph myGraph;
-        bool searched = false;
 
-        const int gridSize = 32;
+        bool searched = false;
+        bool pressed = false;
+
+        const int gridSize = 32; //size of squares for grid
 
         public Game1()
         {
@@ -24,6 +27,7 @@ namespace Cat_And_Mouse
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -34,15 +38,10 @@ namespace Cat_And_Mouse
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
 
             myGraph = new Graph();
-            myGraph.initialize(graphics, gridSize, this);
-            //myGraph.breadthFirstSearch(myGraph.nodes[1, 1], myGraph.nodes[3, 3]);
-            //myGraph.nodes[1, 1].Print();
-
-            
+            myGraph.initialize(graphics, gridSize, this, spriteBatch);         
         }
 
         /// <summary>
@@ -53,10 +52,6 @@ namespace Cat_And_Mouse
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-
-            //myFont = Content.Load<SpriteFont>("andrewFont");
         }
 
         /// <summary>
@@ -75,16 +70,28 @@ namespace Cat_And_Mouse
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //EXIT APPLICATION
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
-            while(searched == false)
+            //START NEW SEARCH
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && searched == true && pressed == false)
             {
-                myGraph.AndrewBreadthFirst(myGraph.nodes[1, 1], myGraph.nodes[5, 5]);
+                myGraph = new Graph();
+                myGraph.initialize(graphics, gridSize, this, spriteBatch);
+                searched = false;
+                pressed = true;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.Space) && pressed == true)
+            {
+                pressed = false;
+            }
 
-                // myGraph.printAllNodes();
+            while (searched == false)
+            {
+                
+                Random rnd = new Random();
+                myGraph.AndrewBreadthFirst(myGraph.nodes[rnd.Next(0,31), rnd.Next(0,23)], myGraph.nodes[rnd.Next(0,31), rnd.Next(0,23)]);
                 searched = true;
             }
 
@@ -99,13 +106,9 @@ namespace Cat_And_Mouse
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
-            //Primitives2D.DrawRectangle(spriteBatch, new Rectangle(10, 10, 40, 40), Color.Yellow);
 
             myGraph.draw(spriteBatch, graphics);
-
-            //spriteBatch.DrawString(myFont, "Breadth-First Search", new Vector2(graphics.PreferredBackBufferWidth/2, 20), Color.Black);
             
             spriteBatch.End();
 
