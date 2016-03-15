@@ -4,7 +4,6 @@
 #include "Trophy.h"
 #include "TrophyCase.h"
 
-
 using namespace std;
 
 //Program Functions
@@ -19,6 +18,7 @@ void assignmentCopy(TrophyCase* myCase);
 //MAIN PROGRAM---------------------------------------------------------------------
 int main()
 {
+	cout << "Welcome to the Trophy Program for Serious Skillz!" << endl;
 	TrophyCase* andrewCase = new TrophyCase();
 	mainMenu(andrewCase);
 	return(exitApplication());
@@ -28,7 +28,7 @@ int main()
 void mainMenu(TrophyCase* myCase)
 {
 	// display welcome message with instructions
-	int choice;
+	int* choice = new int();
 
 	cout << "Please choose an option and press ENTER to proceed..." << endl;
 	cout << "1 - Add a new Trophy" << endl;
@@ -38,23 +38,23 @@ void mainMenu(TrophyCase* myCase)
 	cout << "5 - Exit the program" << endl;
 
 	//Check for validity of entry
-	cin >> choice;
-	while (!(choice > 0 && choice < 6))
+	cin >> *choice;
+	while (!(*choice > 0 && *choice < 6))
 	{
 		cout << "Please enter an integer between 1 and 5 only" << endl;
-		cin >> choice;
+		cin >> *choice;
 	}
 
 	
 
 	//Get choice from user
-	switch (choice) {
+	switch (*choice) {
 	case 1:
 		makeTrophy(myCase);	
 		break;
 	case 2:
 		cout << "You have chosen to print all the trophies" << endl;
-		cout << myCase;
+		cout << *myCase;
 		mainMenu(myCase);
 		break;
 	case 3:
@@ -73,32 +73,32 @@ void mainMenu(TrophyCase* myCase)
 
 int exitApplication()
 {
-	char a;
+	char* a = new char();
 	cout << "Please enter any character and press ENTER to exit..." << endl;
-	cin >> a;
+	cin >> *a;
 	return 0;
 }
 
 void makeTrophy(TrophyCase* myCase)
 {
-	string newTrophy_name;
-	int newTrophy_level = 0;
-	string newTrophy_color = "default";
-	TrophyColor newColor;
+	string* newTrophy_name = new string();
+	int* newTrophy_level = new int(0);
+	string newTrophy_color;
+	TrophyColor* newColor = new TrophyColor();
 
 	cout << "Please enter the name of the Trophy" << endl;
-	while(getline(cin, newTrophy_name))
-		if (newTrophy_name != "")
+	while(getline(cin, *newTrophy_name))
+		if (*newTrophy_name != "")
 		{
 			break;
 		}
 
 	cout << "Please enter the level of the Trophy (1 - 50)" << endl;
-	cin >> newTrophy_level;
-	while (newTrophy_level > 50 || newTrophy_level < 1)
+	cin >> *newTrophy_level;
+	while (*newTrophy_level > 50 || *newTrophy_level < 1)
 	{
 		cout << "ERROR: Please enter an integer between 1 and 50" << endl;
-		cin >> newTrophy_level;
+		cin >> *newTrophy_level;
 	}
 
 	cout << "Please enter the color: gold, silver, or bronze." << endl;
@@ -117,31 +117,31 @@ void makeTrophy(TrophyCase* myCase)
 
 	if (newTrophy_color == "bronze")
 	{
-		newColor = TrophyColor::bronze;
+		*newColor = TrophyColor::bronze;
 	}
 	else if (newTrophy_color == "silver")
 	{
-		newColor = TrophyColor::silver;
+		*newColor = TrophyColor::silver;
 	}
 	else if (newTrophy_color == "gold")
 	{
-		newColor = TrophyColor::gold;
+		*newColor = TrophyColor::gold;
 	}
 
-	Trophy newTrophy;
-	newTrophy.setName(newTrophy_name);
-	newTrophy.setLevel(newTrophy_level);
-	newTrophy.setColor(newColor);
+	Trophy* newTrophy = new Trophy();
+	newTrophy->setName(*newTrophy_name);
+	newTrophy->setLevel(*newTrophy_level);
+	(*newTrophy).setColor(*newColor);
 
-	myCase->AddTrophy(newTrophy);
+	myCase->AddTrophy(*newTrophy);
 
 
 	mainMenu(myCase);
 }
 void makeCopy(TrophyCase* myCase)
 {
-	TrophyCase copiedCase(*myCase);
-	cout << copiedCase;
+	TrophyCase* copiedCase = new TrophyCase(*myCase);
+	cout << *copiedCase;
 	mainMenu(myCase);
 }
 void assignmentCopy(TrophyCase* myCase)
